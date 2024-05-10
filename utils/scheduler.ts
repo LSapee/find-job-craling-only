@@ -5,7 +5,7 @@ const {ec2Stop} = require("../aws/awsEc2Off");
 
 // 분 시 일 월 요일
 export const crawlingScheduler = async ()=>{
-    cron.schedule(("15 17 * * *"), async () =>{
+    cron.schedule(("15 30 * * *"), async () =>{
         await postDel();
         const keywords : string[] = await findKeywords();
         for(const item of keywords){
