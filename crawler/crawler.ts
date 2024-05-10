@@ -35,7 +35,7 @@ const jobKCrawler = async (keyword:string):Promise<boolean>=>{
         let ok = false;
         do {
             cnt++;
-            await driver.wait(until.elementLocated(By.css(".list-post")), 20000);
+            await driver.wait(until.elementLocated(By.css(".list-post")), 200000);
             // elements = 공고 블록
             let elements:WebElement[] = await driver.findElements(By.css(".list-post"));
             for(let i=0; i<elements.length; i++){
@@ -96,10 +96,10 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
     try{
         await driver.get(myURL)
         // 검색을 위한 input을 띄우는 버튼
-        await driver.wait(until.elementLocated(By.css("#btn_search")),10000)
+        await driver.wait(until.elementLocated(By.css("#btn_search")),100000)
         let searchBtn:WebElement =await driver.findElement(By.css("#btn_search"));
         searchBtn.click();
-        await driver.wait(until.elementLocated(By.css("#ipt_keyword_recruit")),10000)
+        await driver.wait(until.elementLocated(By.css("#ipt_keyword_recruit")),100000)
         let searchInput:WebElement = await driver.findElement(By.css("#ipt_keyword_recruit"));
         searchInput.sendKeys(keyword);
         let searchBtn2:WebElement = await driver.findElement(By.css("#btn_search_recruit"));
@@ -108,7 +108,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
         await driver.sleep(1000);
         let cnt =0;
         if(keyword!=="golang"){
-            await driver.wait(until.elementLocated(By.css(".type_box")),10000);
+            await driver.wait(until.elementLocated(By.css(".type_box")),100000);
             const tabList:WebElement[] = await driver.findElements(By.css(".type_box>a"));
             for(let i=0; i<tabList.length; i++){
                 const clickbtn:string = await tabList[i].getText();
@@ -121,11 +121,11 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
         let ok:boolean = false;
         do{
             cnt++;
-            await driver.wait(until.elementLocated(By.css(".item_recruit")),10000);
+            await driver.wait(until.elementLocated(By.css(".item_recruit")),100000);
             // 목록 가져오기
             await driver.sleep(1000);
             let elements:WebElement[] = await driver.findElements(By.css(".item_recruit"));
-            await driver.wait(until.elementLocated(By.css(".pagination")),10000);
+            await driver.wait(until.elementLocated(By.css(".pagination")),100000);
             for(let i=0; i<elements.length; i++){
                 const post:WebElement = await elements[i].findElement(By.css(".area_job"));
                 const com:string = await elements[i].findElement(By.css(".area_corp")).getText();

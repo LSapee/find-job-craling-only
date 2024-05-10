@@ -65,6 +65,7 @@ const exps = (exp:string):string[] =>{
     const expList:string[]  =[];
     const nToMRegex:RegExp = /경력 (\d+)~(\d+)년/;
     const overN:RegExp = /경력(\d+)년↑/;
+    const underN:RegExp = /경력(\d+)년↓/;
     if(exp.includes("경력무관"))expList.push("경력무관");
     if(exp.match(nToMRegex)){
         const match:RegExpMatchArray|null = exp.match(nToMRegex);
@@ -87,9 +88,19 @@ const exps = (exp:string):string[] =>{
             }
         }
     }
+    if(exp.match(underN)){
+        const match:RegExpMatchArray|null  = exp.match(overN);
+        if(match!==null) {
+            const n: number = parseInt(match[1]);
+            for (let i:number = 1; i <= n; i++){
+                if(i<10) expList.push(`0${i}년`);
+                else expList.push(`${i}년`);
+            }
+        }
+    }
     if(exp.includes("신입·경력")){expList.push("신입");expList.push("경력");}
     else if(exp.includes("신입")){expList.push("신입");}
-    if(expList.length===0) expList.push(`정규화 되지 않은 경력 ${exp}`);
+    if(expList.length===0) expList.push(`경력 ${exp}`);
     return expList;
 }
 
