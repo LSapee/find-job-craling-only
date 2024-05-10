@@ -34,6 +34,7 @@ const jobKCrawler = async (keyword:string):Promise<boolean>=>{
         // ok = 다음페이지 유무로 다음 버튼
         let ok = false;
         do {
+            cnt++;
             await driver.wait(until.elementLocated(By.css(".list-post")), 20000);
             // elements = 공고 블록
             let elements:WebElement[] = await driver.findElements(By.css(".list-post"));
@@ -68,6 +69,7 @@ const jobKCrawler = async (keyword:string):Promise<boolean>=>{
             await crawlerRepository(myList,keyword);
             myList.length=0;
             ok = await hasNextPage(driver,thisSite);
+            console.log(`잡코리아 ${keyword} ${cnt}페이지까지 완료`)
         }while(ok)
     }catch(e){
         myList.length=0;
@@ -104,6 +106,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
         await driver.sleep(1000);
         searchBtn2.click();
         await driver.sleep(1000);
+        let cnt =0;
         if(keyword!=="golang"){
             await driver.wait(until.elementLocated(By.css(".type_box")),10000);
             const tabList:WebElement[] = await driver.findElements(By.css(".type_box>a"));
@@ -117,6 +120,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
         }
         let ok:boolean = false;
         do{
+            cnt++;
             await driver.wait(until.elementLocated(By.css(".item_recruit")),10000);
             // 목록 가져오기
             await driver.sleep(1000);
@@ -156,6 +160,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
             await crawlerRepository(myList,keyword);
             myList.length=0;
             ok = await hasNextPage(driver,thisSite);
+            console.log(`saramIn ${keyword} ${cnt}페이지까지 완료`)
         }while(ok);
     }catch(e){
         myList.length =0;
