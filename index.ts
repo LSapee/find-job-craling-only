@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 const app = express();
 const port = 3000;
 const {crawlingScheduler} = require('./utils/scheduler');
+
 //json 데이터 파싱
 app.use(express.json());
 // urlparam 파싱
