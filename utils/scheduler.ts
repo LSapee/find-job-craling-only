@@ -6,9 +6,10 @@ const {ec2Stop} = require("../aws/awsEc2Off");
 // 분 시 일 월 요일
 export const crawlingScheduler = async ()=>{
     let cnt = 0;
-    cron.schedule(("0 10 * * *"), async () =>{
+    cron.schedule(("10 20 * * *"), async () =>{
         await postDel();
         const keywords : string[] = await findKeywords();
+        console.log(keywords);
         for(const item of keywords){
             const resultJok = await jobKCrawler(item);
             const resultSaramIn = await saramInCrawler(item);
@@ -16,6 +17,6 @@ export const crawlingScheduler = async ()=>{
             console.log(`크롤링 resultSaramIn ${item}:`, resultSaramIn );
             cnt++;
         }
-        if(cnt==5) await ec2Stop();
+        if(cnt==keywords.length) await ec2Stop();
     })
 }
