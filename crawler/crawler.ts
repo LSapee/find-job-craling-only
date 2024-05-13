@@ -35,7 +35,7 @@ const jobKCrawler = async (keyword:string):Promise<boolean>=>{
         let ok = false;
         do {
             cnt++;
-            await driver.wait(until.elementLocated(By.css(".list-post")), 200000);
+            await driver.wait(until.elementLocated(By.css(".list-post")), 100000);
             // elements = 공고 블록
             let elements:WebElement[] = await driver.findElements(By.css(".list-post"));
             for(let i=0; i<elements.length; i++){
