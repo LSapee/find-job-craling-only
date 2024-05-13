@@ -107,7 +107,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
         searchBtn2.click();
         await driver.sleep(1000);
         let cnt =0;
-        if(keyword!=="golang"){
+        if(keyword!=="golang" && keyword!=="TypeScript"){
             await driver.wait(until.elementLocated(By.css(".type_box")),100000);
             const tabList:WebElement[] = await driver.findElements(By.css(".type_box>a"));
             for(let i=0; i<tabList.length; i++){
