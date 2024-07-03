@@ -3,7 +3,7 @@ import {MyList} from "../types/types";
 const {dateArr} = require("../utils/utils");
 
 // 크롤링 데이터 DB에 넣어주기
-const crawlerRepository =async (Mylists:MyList[], keyWord:string):Promise<boolean> =>{
+const crawlerRepository =async (Mylists:MyList[], keyWord:string, cnt:number,site:string):Promise<boolean> =>{
     let ans :boolean = true;
     try{
         // 키워드 ID 찾기
@@ -70,7 +70,7 @@ const crawlerRepository =async (Mylists:MyList[], keyWord:string):Promise<boolea
             }
         }
     }catch(e){
-        console.error(e)
+        console.error(`${site} 의 ${cnt}페이지 저장 실패`)
         ans =false;
     }finally{
         await prisma.$disconnect();
