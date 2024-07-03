@@ -66,7 +66,7 @@ const jobKCrawler = async (keyword:string):Promise<boolean>=>{
                     postURL
                 });
             }
-            await crawlerRepository(myList,keyword);
+            await crawlerRepository(myList,keyword,cnt,thisSite);
             myList.length=0;
             ok = await hasNextPage(driver,thisSite);
             console.log(`잡코리아 ${keyword} ${cnt}페이지까지 완료`)
@@ -96,7 +96,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
     try{
         await driver.get(myURL)
         // 검색을 위한 input을 띄우는 버튼
-        await driver.wait(until.elementLocated(By.css("#btn_search")),100000)
+        await driver.wait(until.elementLocated(By.css("#btn_search")),200000)
         let searchBtn:WebElement =await driver.findElement(By.css("#btn_search"));
         searchBtn.click();
         await driver.wait(until.elementLocated(By.css("#ipt_keyword_recruit")),100000)
@@ -157,7 +157,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
                     postURL
                 });
             }
-            await crawlerRepository(myList,keyword);
+            await crawlerRepository(myList,keyword,cnt,thisSite);
             myList.length=0;
             ok = await hasNextPage(driver,thisSite);
             console.log(`saramIn ${keyword} ${cnt}페이지까지 완료`)
@@ -165,7 +165,7 @@ const saramInCrawler = async (keyword:string) :Promise<boolean>=>{
     }catch(e){
         myList.length =0;
         hasError =true;
-        console.error("e",e);
+        console.error(`saramIn ${keyword} ${cnt}페이지 에러 발생`);
     }finally{
         await driver.quit();
     }
