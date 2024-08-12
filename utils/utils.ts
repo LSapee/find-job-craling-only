@@ -13,7 +13,7 @@ const hasElement = async (myElement:WebElement,myTag:[]):Promise<string>=>{
 const hasURL =async (Aelement:WebElement,targetSite:string):Promise<boolean|string>=>{
     let urlTag = "";
     if(targetSite ==="jobK"){
-        urlTag = ".post-list-info>a";
+        urlTag = "a.information-title-link";
     }
     try{
         const myURL = await Aelement.findElement(By.css(urlTag)).getAttribute("href");
@@ -29,7 +29,7 @@ const hasNextPage = async (driver:WebDriver,targetSite:string):Promise<boolean>=
     const t:boolean = true;
     const f :boolean= false;
     if(targetSite==="jobK"){
-        nextTag = ".btnPgnNext";
+        nextTag = ".button-next";
         try{
             nextBtn = await driver.findElement(By.css(nextTag));
             await nextBtn.click();

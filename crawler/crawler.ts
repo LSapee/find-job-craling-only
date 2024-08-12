@@ -35,19 +35,36 @@ const jobKCrawler = async (keyword:string):Promise<boolean>=>{
         let ok = false;
         do {
             cnt++;
-            await driver.wait(until.elementLocated(By.css(".list-post")), 100000);
+            //공고 블럭
+            await driver.wait(until.elementLocated(By.css(".list-item")), 100000);
             // elements = 공고 블록
-            let elements:WebElement[] = await driver.findElements(By.css(".list-post"));
+            let elements:WebElement[] = await driver.findElements(By.css(".list-item"));
             for(let i=0; i<elements.length; i++){
                 const post:WebElement = await elements[i];
-                const company:string = await hasElement(post,"a.name.dev_view");
-                const postTitle:string = await hasElement(post,"a.title.dev_view");
-                const exp:string = await hasElement(post,"span.exp")
-                const edu:string = await hasElement(post,"span.edu")
-                const loc:string = await hasElement(post,"span.loc.long")
-                let endDate:string = await hasElement(post,"span.date")
-                const skillStacks:string = await hasElement(post,"p.etc")
+                //회사이름
+                const company:string = await hasElement(post,"a.corp-name-link");
+                // console.log("company",company)
+                // 공고 제목
+                const postTitle:string = await hasElement(post,"a.information-title-link");
+                // console.log("postTitle",postTitle);
+                // 경력
+                const exp:string = await hasElement(post,"li.chip-information-item:nth-of-type(1)");
+                // console.log("exp",exp)
+                // 학벌
+                const edu:string = await hasElement(post,"li.chip-information-item:nth-of-type(2)")
+                // console.log("edu",edu)
+                // 지역
+                const loc:string = await hasElement(post,"li.chip-information-item:nth-of-type(4)")
+                // console.log("loc",loc)
+                // 마감일
+                let endDate:string = await hasElement(post,"li.chip-information-item:nth-of-type(5)")
+                // console.log("endDate",endDate)
+                // 기술 스택
+                // const skillStacks:string = await hasElement(post,"p.etc")
+                // URL 주소
                 const postURL:string|boolean = await hasURL(elements[i],thisSite);
+                // console.log("postURL",postURL);
+                //최사이름
                 const companyName:string = companyReNamed(company);
                 if(postTitle==="")break;
                 if(postURL===false)break;
@@ -61,7 +78,7 @@ const jobKCrawler = async (keyword:string):Promise<boolean>=>{
                     exp:expArr,
                     edu,
                     loc,
-                    skillStacks,
+                    skillStacks:"",
                     endDate,
                     postURL
                 });
